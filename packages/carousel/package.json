@@ -17,6 +17,10 @@
     "qa-circular-deps": "madge --circular --extensions ts,tsx --exclude __tests__ --exclude __mocks__ --exclude __snapshots__ src",
     "build": "bun qa-circular-deps && bob build"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dixitpriyanshu/isekai.git"
+  },
   "files": [
     "src/",
     "lib/",
