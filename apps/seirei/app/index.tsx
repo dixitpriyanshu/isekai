@@ -1,7 +1,24 @@
-import { View } from "react-native";
-
+import { View, Text } from "react-native";
 import React from "react";
-import { CarouselWrapper } from "@isekai/carousel";
+import { CarouselWrapper, InfiniteCarouselWrapper } from "@isekai/carousel";
+import { Image, useImage } from "expo-image";
+
+export function MyImage() {
+  const image = useImage("https://picsum.photos/1000/800", {
+    maxWidth: 800,
+    onError(error, retry) {
+      console.error("Loading failed:", error.message);
+    },
+  });
+
+  if (!image) {
+    return <Text>Image is loading...</Text>;
+  }
+
+  return (
+    <Image source={image} style={{ width: "100%", height: image.height / 2 }} />
+  );
+}
 
 export default function HomeScreen() {
   return (
@@ -11,23 +28,20 @@ export default function HomeScreen() {
         justifyContent: "center",
       }}
     >
-      <CarouselWrapper>
-        <View
-          style={{ height: 300, width: "100%", backgroundColor: "green" }}
-        />
-        <View style={{ height: 300, width: "100%", backgroundColor: "blue" }} />
-        <View
-          style={{ height: 300, width: "100%", backgroundColor: "yellow" }}
-        />
-        <View style={{ height: 300, width: "100%", backgroundColor: "red" }} />
-
-        <View
-          style={{ height: 300, width: "100%", backgroundColor: "purple" }}
-        />
-        <View
-          style={{ height: 300, width: "100%", backgroundColor: "orange" }}
-        />
+      <CarouselWrapper autoSlide>
+        <MyImage />
+        <MyImage />
+        <MyImage />
+        <MyImage />
+        <MyImage />
+        <MyImage />
+        <MyImage />
       </CarouselWrapper>
+      <InfiniteCarouselWrapper autoSlide>
+        {Array.from({ length: 5 }, (_, index) => (
+          <MyImage key={index} />
+        ))}
+      </InfiniteCarouselWrapper>
     </View>
   );
 }

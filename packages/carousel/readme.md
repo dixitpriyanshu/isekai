@@ -60,25 +60,76 @@ import { CarouselWrapper } from "./CarouselWrapper";
 
 ---
 
-## 🧠 Pagination Logic
+# InfiniteCarouselWrapper
 
-* If there are **3 or fewer slides**, all dots are shown and active dot highlights the current index.
-* If there are **more than 3 slides**, only 3 dots are shown at once:
-
-  * First dot is active at start
-  * Last dot is active at end
-  * Middle dot is active while scrolling through middle slides
-* Active dot animates with a **1.2x scale effect** for visual focus.
+`InfiniteCarouselWrapper` is a horizontally scrollable, auto-playing carousel component designed using `Animated.FlatList` from `react-native-reanimated`. It supports infinite-like scrolling behavior by continuously appending the initial children to the data list and handles both manual swiping and automatic transitions.
 
 ---
 
+## ✨ Features
 
-## 🛠️ To Do
+- Infinite scroll effect via data duplication
+- Optional auto-play with configurable interval
+- 3-dot pagination logic:
+  - First dot active on the first slide
+  - Middle dot active on intermediate slides
+  - Last dot active on the final slide
+- Customizable pagination through a render prop
+- Slide change callback support
 
-* [ ] Add spring-based scale animation (optional)
-* [ ] Add support for vertical orientation
-* [ ] Support swipe-to-pause auto-scroll
-* [ ] Expose `onSlideChange` callback
+---
+
+## 🔧 Props
+
+| Prop                    | Type                                  | Default         | Description                                                                 |
+|-------------------------|---------------------------------------|------------------|-----------------------------------------------------------------------------|
+| `children`              | `ReactNode[]`                         | **Required**     | Carousel items to be displayed.                                             |
+| `wrapperStyle`          | `ViewStyle`                           | `undefined`      | Custom style for the FlatList container.                                   |
+| `autoSlide`             | `boolean`                             | `false`          | Enables automatic sliding at intervals.                                    |
+| `snapDuration`          | `number`                              | `1000`           | Duration between auto slides (in ms).                                       |
+| `activeSlideAccentColor`| `string`                              | `#00000070`      | Color of the active pagination dot.                                        |
+| `inactiveSlideAccentColor` | `string`                           | `#D3D3D350`      | Color of the inactive pagination dots.                                     |
+| `dotSize`               | `number`                              | `10`             | Diameter of the pagination dots.                                            |
+| `onSlideChange`         | `(index: number) => void`             | `undefined`      | Callback triggered when the current visible slide changes.                 |
+| `paginationComponent`   | `(index: number) => ReactNode`        | `undefined`      | Optional render prop to provide custom pagination component.               |
+
+---
+
+## 📦 Behavior
+
+- Internally manages the FlatList's scroll position using `react-native-reanimated`.
+- Duplicates the `children` array dynamically to simulate infinite scroll.
+- Uses `ViewabilityConfig` to track the visible item and update pagination.
+- Pagination by default shows only 3 dots:
+  - First dot highlighted when at the first index.
+  - Last dot highlighted when at the final index.
+  - Middle dot highlighted for all other indices.
+
+---
+
+## 🧠 Notes
+
+- Ensure your `children` array contains at least 1 element.
+- The `autoSlide` timer resets on user scroll interaction and resumes after.
+- The component works well for image sliders, banners, and promotional cards.
+
+---
+
+## 📌 Example Usage
+
+```tsx
+<InfiniteCarouselWrapper autoSlide snapDuration={3000}>
+  {[<Card1 />, <Card2 />, <Card3 />]}
+</InfiniteCarouselWrapper>
+```
+
+---
+
+## 🔍 To Do / Improvements
+
+- Pause on press
+- Add manual navigation controls (next/prev)
+- Add loop reset when data grows too large
 
 ---
 
