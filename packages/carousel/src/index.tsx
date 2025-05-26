@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { View, ViewStyle, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import Animated, {
   cancelAnimation,
   runOnJS,
@@ -11,31 +11,14 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { SCREEN_WIDTH } from "./constants";
+import { CarouselWrapperProps } from "./types";
 
 /**
- * CarouselWrapper is a customizable React Native carousel component that provides horizontal scrolling,
- * autoplay, and pagination indicators for a set of slides. It leverages Reanimated for smooth animations
- * and supports custom styles and accent colors for active/inactive pagination dots.
+ * CarouselWrapper is a React component that implements a horizontally scrollable carousel
+ * with pagination indicators. It supports auto-scrolling and customizable styles.
  *
- * @param children - An array of React nodes representing each slide in the carousel.
- * @param wrapperStyle - Optional custom style for the carousel wrapper container.
- * @param snapDuration - Optional duration (in milliseconds) for the autoplay snap interval. Defaults to 1000ms.
- * @param activeSlideAccentColor - Optional color for the active pagination dot. Defaults to "#00000070".
- * @param inactiveSlideAccentColor - Optional color for inactive pagination dots. Defaults to "#D3D3D350".
- * @param dotSize - Optional size (diameter in pixels) for the pagination dots. Defaults to 10.
- *
- * @example
- * ```tsx
- * <CarouselWrapper
- *   wrapperStyle={{ marginVertical: 20 }}
- *   snapDuration={1500}
- *   activeSlideAccentColor="#FF0000"
- *   inactiveSlideAccentColor="#CCCCCC"
- *   dotSize={12}
- * >
- *   {[<Slide1 />, <Slide2 />, <Slide3 />]}
- * </CarouselWrapper>
- * ```
+ * @param {CarouselWrapperProps} props - The properties for the carousel.
+ * @returns {JSX.Element} The rendered carousel component.
  */
 export const CarouselWrapper = ({
   children,
@@ -44,14 +27,7 @@ export const CarouselWrapper = ({
   activeSlideAccentColor = "#00000070",
   inactiveSlideAccentColor = "#D3D3D350",
   dotSize = 10,
-}: {
-  children: React.ReactNode[];
-  wrapperStyle?: ViewStyle;
-  snapDuration?: number;
-  activeSlideAccentColor?: string;
-  inactiveSlideAccentColor?: string;
-  dotSize?: number;
-}) => {
+}: CarouselWrapperProps) => {
   const totalSlides = children.length;
   const scrollX = useSharedValue(0);
   const autoScrollProgress = useSharedValue(0);

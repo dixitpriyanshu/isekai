@@ -2,7 +2,7 @@
   "author": "Priyanshu Dixit <priyanshudixit2910@gmail.com>",
   "license": "MIT",
   "name": "@seirei/carousel",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "peerDependencies": {
     "react": "*",
     "react-native": "*",
