@@ -28,19 +28,18 @@ export default function HomeScreen() {
         justifyContent: "center",
       }}
     >
-      <CarouselWrapper autoSlide>
-        <MyImage />
-        <MyImage />
-        <MyImage />
-        <MyImage />
-        <MyImage />
-        <MyImage />
-        <MyImage />
-      </CarouselWrapper>
       <InfiniteCarouselWrapper autoSlide>
-        {Array.from({ length: 5 }, (_, index) => (
-          <MyImage key={index} />
-        ))}
+        <View style={{ width: "100%", height: 200, backgroundColor: "red" }} />
+        <View style={{ width: "100%", height: 200, backgroundColor: "blue" }} />
+        <View
+          style={{ width: "100%", height: 200, backgroundColor: "green" }}
+        />
+        <View
+          style={{ width: "100%", height: 200, backgroundColor: "yellow" }}
+        />
+        <View
+          style={{ width: "100%", height: 200, backgroundColor: "purple" }}
+        />
       </InfiniteCarouselWrapper>
     </View>
   );

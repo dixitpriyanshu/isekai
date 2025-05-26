@@ -88,5 +88,11 @@ export type InfiniteCarouselWrapperProps = {
    * Custom pagination component that can be used to render the pagination indicators.
    * If provided, this will override the default pagination indicators.
    */
+  /**
+   * Horizontal padding for the content inside the carousel.
+   * This can be used to adjust the spacing between the content and the edges of the carousel.
+   * Default is 0.
+   */
+  contentPaddingHorizaintal?: number;
   paginationComponent?: (index: number) => React.ReactNode;
 };

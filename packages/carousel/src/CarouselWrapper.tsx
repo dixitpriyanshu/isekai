@@ -86,7 +86,7 @@ export const CarouselWrapper = ({
 
   /* ---------- render ---------- */
   return (
-    <Animated.View style={[{ width: SCREEN_WIDTH }, wrapperStyle]}>
+    <Animated.View style={[{ overflow: "hidden" }, wrapperStyle]}>
       <Animated.ScrollView
         decelerationRate="fast"
         horizontal

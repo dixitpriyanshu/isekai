@@ -22,6 +22,7 @@ export const InfiniteCarouselWrapper = ({
   wrapperStyle,
   autoSlide = false,
   snapDuration = 2000,
+  contentPaddingHorizaintal = 0,
   activeSlideAccentColor = "#00000070",
   inactiveSlideAccentColor = "#D3D3D350",
   dotSize = 10,
@@ -88,13 +89,14 @@ export const InfiniteCarouselWrapper = ({
     };
   }, [autoSlide, snapDuration, width]);
 
+  const effectiveWidth = width - contentPaddingHorizaintal * 2;
+
   return (
-    <View>
+    <View style={[{ overflow: "hidden" }, wrapperStyle]}>
       <Animated.FlatList
         ref={ref}
         horizontal
         pagingEnabled
-        style={[{ width }, wrapperStyle]}
         bounces={false}
         showsHorizontalScrollIndicator={false}
         scrollEventThrottle={16}
@@ -116,7 +118,9 @@ export const InfiniteCarouselWrapper = ({
         onEndReachedThreshold={0.5}
         data={carouselData}
         keyExtractor={(_, index) => `carousel_item_${index}`}
-        renderItem={({ item }) => <View style={{ width }}>{item}</View>}
+        renderItem={({ item }) => (
+          <View style={{ width: effectiveWidth }}>{item}</View>
+        )}
       />
       {paginationComponent ? (
         paginationComponent(currentIndex)
