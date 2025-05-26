@@ -19,6 +19,14 @@ export default function HomeScreen() {
         <View
           style={{ height: 300, width: "100%", backgroundColor: "yellow" }}
         />
+        <View style={{ height: 300, width: "100%", backgroundColor: "red" }} />
+
+        <View
+          style={{ height: 300, width: "100%", backgroundColor: "purple" }}
+        />
+        <View
+          style={{ height: 300, width: "100%", backgroundColor: "orange" }}
+        />
       </CarouselWrapper>
     </View>
   );
