@@ -5,12 +5,38 @@ import Animated, {
   runOnJS,
   useAnimatedReaction,
   useAnimatedScrollHandler,
+  useAnimatedStyle,
   useSharedValue,
   withRepeat,
   withTiming,
 } from "react-native-reanimated";
 import { SCREEN_WIDTH } from "./constants";
 
+/**
+ * CarouselWrapper is a customizable React Native carousel component that provides horizontal scrolling,
+ * autoplay, and pagination indicators for a set of slides. It leverages Reanimated for smooth animations
+ * and supports custom styles and accent colors for active/inactive pagination dots.
+ *
+ * @param children - An array of React nodes representing each slide in the carousel.
+ * @param wrapperStyle - Optional custom style for the carousel wrapper container.
+ * @param snapDuration - Optional duration (in milliseconds) for the autoplay snap interval. Defaults to 1000ms.
+ * @param activeSlideAccentColor - Optional color for the active pagination dot. Defaults to "#00000070".
+ * @param inactiveSlideAccentColor - Optional color for inactive pagination dots. Defaults to "#D3D3D350".
+ * @param dotSize - Optional size (diameter in pixels) for the pagination dots. Defaults to 10.
+ *
+ * @example
+ * ```tsx
+ * <CarouselWrapper
+ *   wrapperStyle={{ marginVertical: 20 }}
+ *   snapDuration={1500}
+ *   activeSlideAccentColor="#FF0000"
+ *   inactiveSlideAccentColor="#CCCCCC"
+ *   dotSize={12}
+ * >
+ *   {[<Slide1 />, <Slide2 />, <Slide3 />]}
+ * </CarouselWrapper>
+ * ```
+ */
 export const CarouselWrapper = ({
   children,
   wrapperStyle,
@@ -98,7 +124,7 @@ export const CarouselWrapper = ({
       </Animated.ScrollView>
 
       {/* ---- Pagination ---- */}
-      <View style={styles.paginationContainer}>
+      <Animated.View style={styles.paginationContainer}>
         {visibleIndices.map((slideIndex, i) => {
           // Which dot should be “focussed”?
           const isActive =
@@ -109,9 +135,24 @@ export const CarouselWrapper = ({
                 (activeIndex !== 0 &&
                   activeIndex !== totalSlides - 1 &&
                   i === 1)));
+          const animatedScale = useSharedValue(isActive ? 1.2 : 1);
+
+          useAnimatedReaction(
+            () => activeIndex,
+            () => {
+              animatedScale.value = withTiming(isActive ? 1.2 : 1, {
+                duration: 300,
+              });
+            },
+            [isActive, activeIndex]
+          );
+
+          const animatedStyle = useAnimatedStyle(() => ({
+            transform: [{ scale: animatedScale.value }],
+          }));
 
           return (
-            <View
+            <Animated.View
               key={i}
               style={[
                 styles.dot,
@@ -123,11 +164,12 @@ export const CarouselWrapper = ({
                     ? activeSlideAccentColor
                     : inactiveSlideAccentColor,
                 },
+                animatedStyle,
               ]}
             />
           );
         })}
-      </View>
+      </Animated.View>
     </Animated.View>
   );
 };
