@@ -1,0 +1,39 @@
+{
+  "author": "Priyanshu Dixit <priyanshudixit2910@gmail.com>",
+  "license": "MIT",
+  "name": "@seirei/carousel",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-reanimated": "*"
+  },
+  "main": "lib/module/index",
+  "module": "lib/module/index",
+  "react-native": "src/index",
+  "source": "src/index",
+  "types": "lib/typescript/index.d.ts",
+  "scripts": {
+    "qa-circular-deps": "madge --circular --extensions ts,tsx --exclude __tests__ --exclude __mocks__ --exclude __snapshots__ src",
+    "build": "bun qa-circular-deps && bob build"
+  },
+  "files": [
+    "src/",
+    "lib/",
+    "carousel.d.ts"
+  ],
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true,
+          "jsxRuntime": "classic"
+        }
+      ],
+      "typescript"
+    ]
+  }
+}
